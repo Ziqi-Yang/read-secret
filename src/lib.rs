@@ -14,7 +14,7 @@ use std::{
 pub enum SecretType {
     /// environment variable name
     Env(String),
-    /// file path NOTE: relative to ... or absolute
+    /// file path relative to the project root or an absolute path
     File(String),
     /// secret string
     String(String),
@@ -54,7 +54,7 @@ pub fn read_env(env_name: &str) -> Result<String, VarError> {
     env::var(env_name)
 }
 
-/// NOTE: path relative to ... or absolute path
+/// path relative to project root or an absolute path
 pub fn read_file(path: &str) -> io::Result<String> {
     let path = Path::new(path);
     let mut buf = String::new();
@@ -126,6 +126,8 @@ mod tests {
     #[test]
     fn test_read_file() -> io::Result<()> {
         let sl = "El Psy Kongaroo";
+        let sr = read_file("/home/zarkli/projects/rust/read-secret/tests/pass_0")?;
+        assert_eq!(sl, sr);
         let sr = read_file("tests/pass_0")?;
         assert_eq!(sl, sr);
         Ok(())

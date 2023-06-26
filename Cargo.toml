@@ -2,6 +2,14 @@
 name = "read-secret"
 version = "0.1.0"
 edition = "2021"
+license = "MIT OR Apache-2.0"
+description = "An rust library that provides an easy way to read secrets from your environment and file. "
+homepage="https://git.sr.ht/~meow_king/read-secret"
+repository = "https://git.sr.ht/~meow_king/read-secret"
+readme = "README.md"
+keywords = ["dev", "secret", "development", "env", "gpg"]
+categories = ["development-tools"]
+
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
