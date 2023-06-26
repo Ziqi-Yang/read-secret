@@ -33,11 +33,15 @@ pub enum DecryptMethod<'a> {
 pub fn read_secret(stype: SecretType, dm: &mut DecryptMethod) -> Result<String, Box<dyn Error>> {
     match stype {
         SecretType::Env(name) => {
-						read_env(&name)
+						let origin = read_env(&name)
+								.map_err(|e| Box::new(e) as Box<dyn Error>)?;
+						decrypt(origin, dm)
 								.map_err(|e| Box::new(e) as Box<dyn Error>)
 				},
 				SecretType::File(path) => {
-						read_file(&path)
+						let origin = read_file(&path)
+								.map_err(|e| Box::new(e) as Box<dyn Error>)?;
+						decrypt(origin, dm)
 								.map_err(|e| Box::new(e) as Box<dyn Error>)
 				},
         SecretType::String(secret) => Ok(secret),
@@ -63,7 +67,7 @@ fn decrypt(estr: String, dm: &mut DecryptMethod) -> io::Result<String> {
 		match dm {
 				DecryptMethod::None => Ok(estr),
 				DecryptMethod::GPG => {
-						let mut gpg = Command::new("gpg")
+						let gpg = Command::new("gpg")
 								.args(["--no-tty", "-q", "-d", "-a"])
 								.stdin(Stdio::piped())
 								.stdout(Stdio::piped())
@@ -99,14 +103,14 @@ mod tests {
     use super::*;
     const LIB_VERSION: &str = "0.1.0";
 
-    // #[test]
-    // fn test_read_secret() -> Result<(), Box<dyn Error>> {
-    //     let st = SecretType::Env("CARGO_PKG_VERSION".to_string());
-    //     let sr = read_secret(st)?;
-    //     assert_eq!(LIB_VERSION, sr);
-    //     // TODO
-    //     Ok(())
-    // }
+    #[test]
+    fn test_read_secret() -> Result<(), Box<dyn Error>> {
+				let mut dm = DecryptMethod::None;
+        let st = SecretType::Env("CARGO_PKG_VERSION".to_string());
+        let sr = read_secret(st, &mut dm)?;
+        assert_eq!(LIB_VERSION, sr);
+        Ok(())
+    }
 
     #[test]
     fn test_read_env() -> Result<(), VarError> {
