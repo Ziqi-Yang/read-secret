@@ -7,6 +7,7 @@ description = "An rust library that provides an easy way to read secrets from yo
 homepage="https://git.sr.ht/~meow_king/read-secret"
 repository = "https://git.sr.ht/~meow_king/read-secret"
 readme = "README.md"
+documentation="https://docs.rs/read-secret"
 keywords = ["dev", "secret", "development", "env", "gpg"]
 categories = ["development-tools"]
 
