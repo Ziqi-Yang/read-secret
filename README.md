@@ -8,11 +8,11 @@ Code is hosted on [sourcehut](https://git.sr.ht/~meow_king/read-secret), and it 
 
 ## Usage
 
-Put the following code into your `cargo.toml`
+Run command `cargo add read-secret` or put the following code into your `cargo.toml`
 
 ``` toml
 [dependencies]
-read-secret = "0.1"
+read-secret = <version>
 ```
 
 ## Example 
