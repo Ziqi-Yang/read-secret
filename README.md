@@ -45,3 +45,19 @@ fn main() {
 }
 ```
 
+## Bugs, features, feedback, and contributions
+
+### Questions and general feedback
+
+Send a (plain text) email to [the mailing list for discussion](https://lists.sr.ht/~meow_king/discusses).
+
+### Bugs and feature 
+
+Submit a ticket to the [tracker](https://todo.sr.ht/~meow_king/read-secret).
+
+### Pull requests, patches
+
+Send patches to [my mailing list for development](https://lists.sr.ht/~meow_king/dev), or use GitHub if you want. 
+
+
+
