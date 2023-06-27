@@ -31,21 +31,19 @@ pub enum DecryptMethod<'a> {
 
 /// Provide an common entry to read secret
 pub fn read_secret(stype: SecretType, dm: &mut DecryptMethod) -> Result<String, Box<dyn Error>> {
-    match stype {
+    let estr = match stype {
         SecretType::Env(name) => {
-						let origin = read_env(&name)
-								.map_err(|e| Box::new(e) as Box<dyn Error>)?;
-						decrypt(origin, dm)
-								.map_err(|e| Box::new(e) as Box<dyn Error>)
+						read_env(&name)
+								.map_err(|e| Box::new(e) as Box<dyn Error>)?
 				},
 				SecretType::File(path) => {
-						let origin = read_file(&path)
-								.map_err(|e| Box::new(e) as Box<dyn Error>)?;
-						decrypt(origin, dm)
-								.map_err(|e| Box::new(e) as Box<dyn Error>)
+						read_file(&path)
+								.map_err(|e| Box::new(e) as Box<dyn Error>)?
 				},
-        SecretType::String(secret) => Ok(secret),
-    }
+        SecretType::String(secret) => secret,
+    };
+		decrypt(estr, dm)
+				.map_err(|e| Box::new(e) as Box<dyn Error>)
 }
 
 /// Get a value of the given environment variable. If the given environment variable doesn't exist,
